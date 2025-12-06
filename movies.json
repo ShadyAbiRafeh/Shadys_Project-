@@ -68,5 +68,40 @@
         "director": "Joss Whedon",
         "actor": "Robert Downey Jr., Chris Evans",
         "genre": "Action"
+    },
+    {
+        "name": "Interstellar",
+        "date": "2014",
+        "director": "Christopher Nolan",
+        "actor": "Matthew McConaughey, Anne Hathaway",
+        "genre": "Sci-Fi"
+    },
+    {
+        "name": "The Silence of the Lambs",
+        "date": "1991",
+        "director": "Jonathan Demme",
+        "actor": "Jodie Foster, Anthony Hopkins",
+        "genre": "Thriller"
+    },
+    {
+        "name": "Schindler's List",
+        "date": "1993",
+        "director": "Steven Spielberg",
+        "actor": "Liam Neeson, Ralph Fiennes",
+        "genre": "Historical Drama"
+    },
+    {
+        "name": "Titanic",
+        "date": "1997",
+        "director": "James Cameron",
+        "actor": "Leonardo DiCaprio, Kate Winslet",
+        "genre": "Romance"
+    },
+    {
+        "name": "The Lion King",
+        "date": "1994",
+        "director": "Roger Allers, Rob Minkoff",
+        "actor": "Matthew Broderick, Jeremy Irons",
+        "genre": "Animation"
     }
 ]

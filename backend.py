@@ -10,10 +10,33 @@ with open('movies.json', 'r') as f:
 @app.route('/', methods=['GET'])
 def home():
     # Display all movies initially
-    results_html = "<ul>"
+    results_html = """
+    <table border="1" style="border-collapse: collapse; width: 100%;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Year</th>
+                <th>Director</th>
+                <th>Actors</th>
+                <th>Genre</th>
+            </tr>
+        </thead>
+        <tbody>
+    """
     for movie in movies:
-        results_html += f"<li>{movie['name']} ({movie['date']}) - Directed by {movie['director']} - Actors: {movie['actor']} - Genre: {movie['genre']}</li>"
-    results_html += "</ul>"
+        results_html += f"""
+            <tr>
+                <td>{movie['name']}</td>
+                <td>{movie['date']}</td>
+                <td>{movie['director']}</td>
+                <td>{movie['actor']}</td>
+                <td>{movie['genre']}</td>
+            </tr>
+        """
+    results_html += """
+        </tbody>
+    </table>
+    """
 
     html = f"""
     <!DOCTYPE html>
@@ -68,10 +91,33 @@ def web_search():
     # Build HTML for results
     results_html = ""
     if results:
-        results_html = "<ul>"
+        results_html = """
+        <table border="1" style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Year</th>
+                    <th>Director</th>
+                    <th>Actors</th>
+                    <th>Genre</th>
+                </tr>
+            </thead>
+            <tbody>
+        """
         for movie in results:
-            results_html += f"<li>{movie['name']} ({movie['date']}) - Directed by {movie['director']} - Actors: {movie['actor']} - Genre: {movie['genre']}</li>"
-        results_html += "</ul>"
+            results_html += f"""
+                <tr>
+                    <td>{movie['name']}</td>
+                    <td>{movie['date']}</td>
+                    <td>{movie['director']}</td>
+                    <td>{movie['actor']}</td>
+                    <td>{movie['genre']}</td>
+                </tr>
+            """
+        results_html += """
+            </tbody>
+        </table>
+        """
     else:
         results_html = "<p>No movies found matching the criteria.</p>"
 
@@ -79,7 +125,7 @@ def web_search():
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Movie Library Search Results</title>
+        <title>Your Movie Library</title>
         <style>
             body {{ font-family: Arial, sans-serif; margin: 20px; }}
             form {{ margin-bottom: 20px; }}
@@ -90,7 +136,7 @@ def web_search():
         </style>
     </head>
     <body>
-        <h1>Movie Library Search Results</h1>
+        <h1>Your Movie Library</h1>
         <form action="/websearch" method="get">
             <input type="text" name="name" placeholder="Movie Name" value="{request.args.get('name', '')}">
             <input type="text" name="date" placeholder="Release Date" value="{request.args.get('date', '')}">
