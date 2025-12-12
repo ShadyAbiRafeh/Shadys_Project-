@@ -1,40 +1,5 @@
 [
     {
-        "name": "The Dark Knight",
-        "date": "2008",
-        "director": "Christopher Nolan",
-        "actor": "Christian Bale, Heath Ledger",
-        "genre": "Action"
-    },
-    {
-        "name": "The Matrix",
-        "date": "1999",
-        "director": "The Wachowskis",
-        "actor": "Keanu Reeves, Laurence Fishburne",
-        "genre": "Sci-Fi"
-    },
-    {
-        "name": "Forrest Gump",
-        "date": "1994",
-        "director": "Robert Zemeckis",
-        "actor": "Tom Hanks, Robin Wright",
-        "genre": "Drama"
-    },
-    {
-        "name": "The Lord of the Rings: The Fellowship of the Ring",
-        "date": "2001",
-        "director": "Peter Jackson",
-        "actor": "Elijah Wood, Ian McKellen",
-        "genre": "Fantasy"
-    },
-    {
-        "name": "Fight Club",
-        "date": "1999",
-        "director": "David Fincher",
-        "actor": "Brad Pitt, Edward Norton",
-        "genre": "Drama"
-    },
-    {
         "name": "The Avengers",
         "date": "2012",
         "director": "Joss Whedon",
@@ -68,13 +33,6 @@
         "director": "James Cameron",
         "actor": "Leonardo DiCaprio, Kate Winslet",
         "genre": "Romance"
-    },
-    {
-        "name": "The Lion King",
-        "date": "1994",
-        "director": "Roger Allers, Rob Minkoff",
-        "actor": "Matthew Broderick, Jeremy Irons",
-        "genre": "Animation"
     },
     {
         "name": "Gladiator",
@@ -119,10 +77,10 @@
         "genre": "Animation"
     },
     {
-        "name": "shady",
-        "date": "2006",
-        "director": "omar",
-        "actor": "abi rafeh",
-        "genre": "biography"
+        "name": "the",
+        "date": "",
+        "director": "",
+        "actor": "",
+        "genre": ""
     }
 ]

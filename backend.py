@@ -1,10 +1,15 @@
 from flask import Flask, request, jsonify, render_template_string, redirect, url_for
 import json
 
+# Simple Flask backend for the "Your Movie Library" application.
+# Provides routes to view, search, add, and delete movies stored in `movies.json`.
+
 app = Flask(__name__)
 
 # Load movies from JSON file
 def load_movies():
+    # Load movies collection from the JSON file on disk.
+    # If the file doesn't exist yet, return an empty list so the app can still function.
     try:
         with open('movies.json', 'r') as f:
             return json.load(f)
@@ -12,13 +17,20 @@ def load_movies():
         return []
 
 movies = load_movies()
+# In-memory cache of movies loaded at startup. Routes modify this list and calls
+# to `save_movies()` persist changes back to `movies.json`.
 
 def save_movies():
+    # Persist the current `movies` list to disk. Kept as a separate function for
+    # testability and to centralize serialization behaviour.
     with open('movies.json', 'w') as f:
         json.dump(movies, f, indent=4)
 
 @app.route('/', methods=['GET'])
 def home():
+    # Home page route: renders an HTML page that contains the add/search forms
+    # and a table containing all movies currently in memory.
+    # Note: the HTML template is constructed inline for simplicity.
     # Display all movies initially
     results_html = """
     <table border="1" style="border-collapse: collapse; width: 100%;">
@@ -34,6 +46,8 @@ def home():
         </thead>
         <tbody>
     """
+    # Create table rows for every movie in the list. Index `i` is used by the
+    # delete route to identify which movie to remove.
     for i, movie in enumerate(movies):
         results_html += f"""
             <tr>
@@ -229,14 +243,16 @@ def home():
 
 @app.route('/websearch', methods=['GET'])
 def web_search():
-    # Get query parameters
+    # Extract search parameters from query string. Use lowercase values to
+    # perform case-insensitive matching against movie fields.
     name = request.args.get('name', '').lower()
     date = request.args.get('date', '').lower()
     director = request.args.get('director', '').lower()
     actor = request.args.get('actor', '').lower()
     genre = request.args.get('genre', '').lower()
 
-    # Filter movies based on search criteria
+    # Filter movies based on the provided criteria. A missing/empty field means
+    # "match all" for that attribute.
     results = []
     for movie in movies:
         if (name in movie['name'].lower() or not name) and \
@@ -283,6 +299,7 @@ def web_search():
         </table>
         """
     else:
+        # Provide a friendly message when no matching movies were found.
         results_html = "<p>No movies found matching the criteria.</p>"
 
     html = f"""
@@ -454,7 +471,9 @@ def web_search():
 
 @app.route('/search', methods=['GET'])
 def search_movies():
-    # Get query parameters
+    # API search endpoint: returns a JSON array of matching movies. This is
+    # similar to `web_search` but returns machine-readable data instead of an
+    # HTML page.
     name = request.args.get('name', '').lower()
     date = request.args.get('date', '').lower()
     director = request.args.get('director', '').lower()
@@ -475,6 +494,8 @@ def search_movies():
 
 @app.route('/add', methods=['POST'])
 def add_movie():
+    # Read submitted form values. We accept empty strings for non-required
+    # fields but the `name` field must be present to add the movie.
     name = request.form.get('name', '').strip()
     date = request.form.get('date', '').strip()
     director = request.form.get('director', '').strip()
@@ -482,6 +503,7 @@ def add_movie():
     genre = request.form.get('genre', '').strip()
 
     if name:
+        # Only modify the global `movies` list when a non-empty name is given.
         global movies
         movies.append({
             'name': name,
@@ -490,11 +512,16 @@ def add_movie():
             'actor': actor,
             'genre': genre
         })
+        # Persist the updated list to disk.
         save_movies()
+    # Always redirect back to the home page after processing the POST.
     return redirect(url_for('home'))
 
 @app.route('/delete/<int:index>', methods=['POST'])
 def delete_movie(index):
+    # Safely delete a movie by index if it's within bounds and persist the
+    # change. Using index-based deletion here matches how the table's forms
+    # submit the target movie to remove.
     global movies
     if 0 <= index < len(movies):
         del movies[index]
@@ -502,4 +529,5 @@ def delete_movie(index):
     return redirect(url_for('home'))
 
 if __name__ == '__main__':
+    # Run the Flask development server when executed as a script.
     app.run(debug=True, host='0.0.0.0')

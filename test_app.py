@@ -4,9 +4,16 @@ import pytest
 
 import backend
 
+# Tests for the backend Flask application (backend.py).
+# These tests use Flask's test client to exercise routes without running
+# the server process. The tests intentionally avoid modifying the filesystem
+# by patching `save_movies` during the `client` fixture.
+
 
 @pytest.fixture
 def client():
+    # Prevent test runs from modifying the JSON file on disk by stubbing
+    # out `save_movies` during the lifetime of the client fixture.
     backend.save_movies = lambda: None  # disable actual file writes during tests
     app = backend.app
     app.config['TESTING'] = True
@@ -15,13 +22,15 @@ def client():
 
 
 def test_home_page_contains_title(client):
+    # GET / should return a 200 and include the main page title
     res = client.get('/')
     assert res.status_code == 200
     assert b"Movie Library" in res.data
 
 
 def test_search_movies_returns_json_filtered():
-    # search for a movie that exists in movies.json
+    # Search endpoint should return a JSON list containing the requested
+    # movie when a matching title is provided.
     with backend.app.test_request_context():
         resp = backend.app.test_client().get('/search', query_string={'name': 'The Matrix'})
         assert resp.status_code == 200
@@ -31,12 +40,16 @@ def test_search_movies_returns_json_filtered():
 
 
 def test_web_search_no_results_shows_message(client):
+    # When the web search yields no matches the HTML response should contain
+    # a friendly 'no results' message.
     res = client.get('/websearch', query_string={'name': 'nonexistentmovie'})
     assert res.status_code == 200
     assert b"No movies found matching the criteria." in res.data
 
 
 def test_add_movie_appends_movie(client):
+    # Adding a movie via POST /add should append a new movie into the
+    # in-memory list and redirect back to the home page.
     # make sure movies list is isolated for test
     original = list(backend.movies)
     backend.movies.clear()
@@ -58,6 +71,8 @@ def test_add_movie_appends_movie(client):
 
 
 def test_delete_movie_removes_entry(client):
+    # Deleting a movie via POST /delete/<index> should remove the movie with
+    # the given index and redirect to the home page.
     # setup movies list with known entries
     original = list(backend.movies)
     backend.movies[:] = [{'name': 'To Delete', 'date': '', 'director': '', 'actor': '', 'genre': ''},]
@@ -71,7 +86,8 @@ def test_delete_movie_removes_entry(client):
 
 
 def test_load_movies_handles_missing_file(monkeypatch):
-    # patch builtins.open to raise FileNotFoundError
+    # Simulate a missing movies.json by patching `open` to raise
+    # `FileNotFoundError` and ensure `load_movies` returns an empty list.
     def fake_open(*args, **kwargs):
         raise FileNotFoundError()
 
