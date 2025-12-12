@@ -1,12 +1,5 @@
 [
     {
-        "name": "The Shawshank Redemption",
-        "date": "1994",
-        "director": "Frank Darabont",
-        "actor": "Tim Robbins, Morgan Freeman",
-        "genre": "Drama"
-    },
-    {
         "name": "The Godfather",
         "date": "1972",
         "director": "Francis Ford Coppola",
@@ -102,6 +95,48 @@
         "date": "1994",
         "director": "Roger Allers, Rob Minkoff",
         "actor": "Matthew Broderick, Jeremy Irons",
+        "genre": "Animation"
+    },
+    {
+        "name": "Gladiator",
+        "date": "2000",
+        "director": "Ridley Scott",
+        "actor": "Russell Crowe, Joaquin Phoenix",
+        "genre": "Historical Drama"
+    },
+    {
+        "name": "The Social Network",
+        "date": "2010",
+        "director": "David Fincher",
+        "actor": "Jesse Eisenberg, Andrew Garfield",
+        "genre": "Drama"
+    },
+    {
+        "name": "Avatar",
+        "date": "2009",
+        "director": "James Cameron",
+        "actor": "Sam Worthington, Zoe Saldana",
+        "genre": "Sci-Fi"
+    },
+    {
+        "name": "The Departed",
+        "date": "2006",
+        "director": "Martin Scorsese",
+        "actor": "Leonardo DiCaprio, Matt Damon",
+        "genre": "Crime"
+    },
+    {
+        "name": "Parasite",
+        "date": "2019",
+        "director": "Bong Joon-ho",
+        "actor": "Song Kang-ho, Lee Sun-kyun",
+        "genre": "Thriller"
+    },
+    {
+        "name": "Spider-Man: Into the Spider-Verse",
+        "date": "2018",
+        "director": "Bob Persichetti, Peter Ramsey, Rodney Rothman",
+        "actor": "Shameik Moore, Jake Johnson",
         "genre": "Animation"
     }
 ]

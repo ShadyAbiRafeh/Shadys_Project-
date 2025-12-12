@@ -1,8 +1,21 @@
-# Movie Library Application TODO
+# TODO for Updating Movie Library Frontend
 
-- [x] Create movies.json with sample movie data
-- [x] Create backend.py with Flask application and /search endpoint
-- [x] Create frontend.py with PyQt GUI
-- [x] Create requirements.txt with dependencies
-- [x] Install dependencies using pip install -r requirements.txt
-- [x] Test the application by running backend and frontend
+- [x] Add more movies to movies.json (add 5-10 popular movies)
+- [x] Update frontend.py to use QTableWidget instead of QListWidget
+  - [x] Import QTableWidget
+  - [x] Replace QListWidget with QTableWidget in initUI
+  - [x] Set table columns and headers
+  - [x] Modify display_all_movies to populate table rows
+  - [x] Modify filter_movies to populate table rows
+- [x] Test the updated GUI
+- [x] Add "Add Movie" and "Delete" functionality
+  - [x] Add "Add Movie" button and input fields
+  - [x] Implement add_movie method to collect inputs and save to JSON
+  - [x] Add delete button to each table row
+  - [x] Implement delete_movie method to remove movie and save to JSON
+  - [x] Update table columns to include Delete
+- [x] Add "Add Movie" and "Delete" functionality to backend.py
+  - [x] Add save_movies function to persist changes
+  - [x] Add /add route (POST) to add a new movie from form data
+  - [x] Add /delete/<int:index> route to delete a movie by index
+  - [x] Modify home() and web_search() HTML to include add form and delete links in table rows
